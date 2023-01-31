@@ -1,0 +1,42 @@
+<% if user_signed_in? %>
+  <h1>Friends</h1>
+
+  <div id="friends">
+    <table class="table table-striped">
+      <thead>
+      <tr class="table-dark">
+
+        <th scope="col">Full name</th>
+        <th scope="col">Email</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Twitter</th>
+        <th scope="col">Actions</th>
+        <th scope="col">User ID</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @friends.each do |friend| %>
+        <tr id="<%= dom_id friend %>">
+          <td><%= link_to friend.first_name+" "+friend.last_name, friend, class: 'btn-link' %></td>
+          <td><%= friend.email %></td>
+          <td><%= friend.phone %></td>
+          <td><%= friend.twitter %></td>
+          <td><%= friend.user.id %></td>
+          <td>
+            <%#= link_to "Show", friend %>
+            <%#= link_to "Edit", edit_friend_path(friend) %>
+            <%= link_to "Delete", friend_path(friend), method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure?'},
+            type: 'button', class: 'btn btn-danger', style: '--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .2rem; --bs-btn-font-size: .50rem;'%>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <%= link_to "New friend", new_friend_path %>
+<% else %>
+ <div class="alert alert-warning">
+   <strong>Empty!</strong>
+ </div>
+<% end %>
